@@ -17,7 +17,7 @@
 
 ## Features
 
-- One super simple slash command: `/rollup <messages> <thread> <when>` 📜
+- One super simple slash command: `/rollup <messages> <thread>` 📜
   - **`messages`**: How many messages should be forwarded to a thread; counts backwards from the most recent in the current channel
   - **`thread`**: The name of the thread created
 - Everyone who sent a message that was forwarded will automatically be added to the new thread! 🧵
@@ -101,7 +101,7 @@ Feel free to look around, but please refrain from copying, modifying, or distrib
 
 👋 Hi there! I'm Edward, and I'm a Computer Science Major at the University of San Francisco. 💻
 
-Rollup is a Discord bot I made for my group of friends and our Discord server. In our trip planning channel (where we use [Register](https://edwardshturman.com/register) – another one of my bots 😉), we'd more and more frequently see that with an increasing amount of events being planned, comes an increasing amount of spam, both related to the event, and just regular chit-chat in between.
+Rollup is a Discord bot I made for my group of friends and our Discord server. In our trip planning channel (where we use [Register](https://edwardshturman.com/register) — another one of my bots 😉), we'd more and more frequently see that with an increasing amount of events being planned, comes an increasing amount of spam, both related to the event, and just regular chit-chat in between.
 
 Well, here's my fix! I'll be updating it regularly for now. Hope you enjoy!
 
