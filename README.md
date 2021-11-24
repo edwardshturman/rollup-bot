@@ -84,7 +84,7 @@ Here's a breakdown of what Rollup requests access to and why:
 >
 > Help command coming soon!
 
-The bot is still very new, and I'm working to resolve bugs I find in the servers I'm in. For any issues you encounter, feel free to [submit an issue](https://github.com/edwardshturman/register-bot/issues).
+The bot is still very new, and I'm working to resolve bugs I find in the servers I'm in. For any issues you encounter, feel free to [submit an issue](https://github.com/edwardshturman/rollup-bot/issues).
 
 ## Tech Stack
 
