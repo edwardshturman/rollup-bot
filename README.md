@@ -18,10 +18,11 @@
 ## Features
 
 - One super simple slash command: `/rollup <messages> <thread>` 📜
-  - **`messages`**: How many messages should be forwarded to a thread; counts backwards from the most recent in the current channel
+  - **`messages`**: How many messages should be forwarded to a thread; counts backwards from the most recent in the current channel, limit 100
   - **`thread`**: The name of the thread created
+- A handy context menu command: right-click any message > `Apps` > `Rollup from here onward` 🖱
 - Everyone who sent a message that was forwarded will automatically be added to the new thread! 🧵
-- All messages are forwarded using a single webhook, keeping things neat ✨
+- All messages are forwarded using a single webhook, keeping things neat for server admins ✨
 - Retain message formatting, and even see who sent it! ✅
 - Message order is preserved 💬
 
@@ -34,12 +35,7 @@ Use Rollup:
 
 ## Roadmap
 
-Future features planned:
-
-- Simple yes/no option on adding people automatically to the new thread (default `yes`)
-- Simple yes/no purge option to skip creating a thread (default `no`)
-- Option of creating a public or private thread (default `public`)
-- Additional archiving and locking features, based on user's permissions in the server
+For upcoming features, check out the [Issues](https://github.com/edwardshturman/rollup-bot/issues) tab!
 
 ## Demo
 
