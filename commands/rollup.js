@@ -91,7 +91,7 @@ module.exports = {
             const thread = await interaction.channel.threads.create({
                 name: interaction.options.getString('thread'),
                 autoArchiveDuration: 60,
-                reason: 'Thread created using Rollup'
+                reason: 'Thread created by ' + interaction.user.tag + ' using Rollup'
             });
             if (thread.joinable) await thread.join();
 
