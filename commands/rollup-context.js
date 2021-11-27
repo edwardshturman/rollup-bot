@@ -16,7 +16,7 @@ module.exports = {
             // console.log(messages.first());
 
             if (!messages.has(interaction.targetId)) {
-                await interaction.reply('Sorry, that message isn\'t within the 100-message limit! Try something more recent.');
+                await interaction.reply({content: 'Sorry, that message isn\'t within the 100-message limit! Try something more recent.', ephemeral: true});
 
             } else {
 

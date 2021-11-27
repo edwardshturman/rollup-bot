@@ -37,6 +37,11 @@ module.exports = {
         //     await interaction.reply({embeds: [rollupHelpEmbed]});
         // } else
 
+        if (interaction.options.getInteger('messages') > 100) {
+            await interaction.reply({content: 'Sorry, that isn\'t within the 100-message limit! Try something more recent.', ephemeral: true});
+            return;
+        }
+
         // Execute /rollup
         interaction.channel.messages.fetch({limit: interaction.options.getInteger('messages')}).then(async messages => {
 
