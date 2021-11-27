@@ -4,7 +4,7 @@ module.exports = {
     data: new ContextMenuCommandBuilder()
 
         // Rollup context menu command
-        .setName('New thread from here')
+        .setName('Rollup from here onward')
         .setType(3),
 
     async execute (interaction) {
@@ -73,7 +73,7 @@ module.exports = {
                 const thread = await interaction.channel.threads.create({
                     name: threadName,
                     autoArchiveDuration: 60,
-                    reason: 'Thread created using Rollup'
+                    reason: 'Thread created by ' + interaction.user.tag + ' using Rollup'
                 });
                 if (thread.joinable) await thread.join();
 
@@ -105,7 +105,7 @@ module.exports = {
                     message.delete();
                 });
 
-                await interaction.reply('New thread created!');
+                await interaction.reply('New thread created from ' + targetValues.length + ' messages!');
             }
 
         });
