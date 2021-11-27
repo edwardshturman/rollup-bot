@@ -4,7 +4,7 @@ module.exports = {
     data: new ContextMenuCommandBuilder()
 
         // Rollup context menu command
-        .setName('New thread from here')
+        .setName('Rollup from here onward')
         .setType(3),
 
     async execute (interaction) {
