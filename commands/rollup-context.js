@@ -105,7 +105,7 @@ module.exports = {
                     message.delete();
                 });
 
-                await interaction.reply('New thread created!');
+                await interaction.reply('New thread created from ' + targetValues.length + ' messages!');
             }
 
         });

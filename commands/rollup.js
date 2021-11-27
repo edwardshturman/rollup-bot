@@ -111,8 +111,7 @@ module.exports = {
                 message.delete();
             });
 
+            await interaction.reply('New thread created from ' + messagesArray.length + ' messages!');
         });
-        await interaction.reply('New thread created!');
-
     }
 };
