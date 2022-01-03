@@ -25,7 +25,7 @@ module.exports = {
         // Dependencies
         const Discord = require('discord.js');
 
-        // On /rollup help, display event command help
+        // On /rollup help, display rollup command help
         // if (interaction.options.getSubcommand() === 'help') {
         //     const rollupHelpEmbed = new Discord.MessageEmbed()
         //         .setColor('#ff4ea0')
@@ -37,6 +37,7 @@ module.exports = {
         //     await interaction.reply({embeds: [rollupHelpEmbed]});
         // } else
 
+        // Ignore if message count exceeds 100
         if (interaction.options.getInteger('messages') > 100) {
             await interaction.reply({content: 'Sorry, that isn\'t within the 100-message limit! Try something more recent.', ephemeral: true});
             return;
