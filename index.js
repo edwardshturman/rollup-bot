@@ -23,7 +23,7 @@ for (const file of commandFiles) {
 // Log launch, set status
 client.once('ready', () => {
     console.log('Rollup is online!');
-    client.user.setActivity('/rollup | v0.2.1', { type: 'LISTENING' });
+    client.user.setActivity('/rollup | v0.3.0', { type: 'LISTENING' });
 });
 
 // Interaction listener for slash commands
