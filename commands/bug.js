@@ -28,7 +28,7 @@ const bugCommand = {
 
         // Create an embed for the bug report
         const embed = new Discord.MessageEmbed()
-            .setColor('#a7fbff')
+            .setColor('#ff4ea0')
             .setTitle('Rollup Bug Report')
             .setDescription('**Details:**')
             .addFields(
