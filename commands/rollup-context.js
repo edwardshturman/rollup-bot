@@ -15,24 +15,14 @@ const rollupContextCommand = {
             else {
                 // Search for existing Rollup webhook
                 let rollupWebhook = {};
-                console.log('Empty rollupWebhook:');
-                console.log(rollupWebhook);
-                console.log(Object.keys(rollupWebhook).length);
 
                 await interaction.member.guild.fetchWebhooks()
                     .then(async webhooks => {
-                        console.log(webhooks);
                         for (const webhook of webhooks.values())
                             if (webhook.owner.id === process.env.BOT_CLIENT_ID) {
                                 // Found Rollup webhook, edit existing to match channel of interaction
-                                console.log('Found Rollup webhook!');
-                                console.log('Size:');
-                                console.log(Object.keys(webhook).length);
-
                                 await webhook.edit({ channel: interaction.channel })
                                     .then(async editedWebhook => {
-                                        console.log('Edited rollup webhook:');
-                                        console.log(editedWebhook);
                                         rollupWebhook = editedWebhook;
                                     })
                                     .catch(console.error);
@@ -40,10 +30,8 @@ const rollupContextCommand = {
 
                         if (Object.keys(rollupWebhook).length === 0) {
                             // No exiting Rollup webhook found, create one for interacting with thread
-                            console.log('No Rollup webhook found! Creating new one.');
                             await interaction.channel.createWebhook('Rollup', { avatar: 'https://raw.githubusercontent.com/edwardshturman/rollup-bot/master/assets/rollup-logo.png' })
                                 .then(webhook => {
-                                    console.log(webhook);
                                     rollupWebhook = webhook;
                                 })
                                 .catch(console.error);
@@ -69,14 +57,9 @@ const rollupContextCommand = {
                 messageValuesArray.reverse();
 
                 const sliceStart = messageKeysArray.indexOf(interaction.targetId);
-                console.log(sliceStart);
-                const targetKeys = messageKeysArray.slice(sliceStart);
-                console.log(targetKeys);
                 const targetValues = messageValuesArray.slice(sliceStart);
-                console.log(targetValues);
 
                 targetValues.forEach(message => {
-                    console.log(message);
                     rollupWebhook.send({
                         username: message.member.displayName,
                         avatarURL: message.author.displayAvatarURL(),
