@@ -1,10 +1,15 @@
 // Dependencies
-require('discord.js');
-require('dotenv').config();
-const fs = require('fs');
+import { Client, Collection, Intents } from 'discord.js';
+import { config } from 'dotenv';
+
+// Commands
+import * as commands from './commands.js';
+
+// Load environment variables
+if (process.env.ENV !== 'PROD')
+    config();
 
 // Launch instance of Discord
-const { Client, Collection, Intents } = require('discord.js');
 const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
     partials: ['MESSAGE', 'GUILD_MEMBER', 'REACTION', 'USER']
@@ -13,23 +18,17 @@ const client = new Client({
 // Create collection of commands
 client.commands = new Collection();
 
-// Check for correct file type (JavaScript) and require command files when running given command
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
+for (const command of commands.default)
     client.commands.set(command.data.name, command);
-}
 
 // Log launch, set status
 client.once('ready', () => {
     console.log('Rollup is online!');
-    client.user.setActivity('/rollup | v0.3.0', { type: 'LISTENING' });
+    client.user.setActivity('/rollup | v0.3.1', { type: 'LISTENING' });
 });
 
 // Interaction listener for slash commands
 client.on('interactionCreate', async interaction => {
-    // console.log(interaction);
-
     const command = client.commands.get(interaction.commandName);
     if (!command) return;
 
@@ -44,5 +43,13 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
+// Reply to being pinged with GIF
+client.on('messageCreate', (message) => {
+    if (message.author.bot) return;
+    if (message.content.includes('@here') || message.content.includes('@everyone') || message.type === 'REPLY') return;
+    if (message.mentions.has(client.user.id))
+        message.channel.send('https://c.tenor.com/Jf-_xbLhAEYAAAAC/discord-valorant.gif');
+});
+
 // Bot login
-client.login(process.env.TOKEN);
+client.login(process.env.BOT_TOKEN);

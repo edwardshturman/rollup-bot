@@ -1,15 +1,11 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+import { SlashCommandBuilder } from '@discordjs/builders';
 
-module.exports = {
+const rollupCommand = {
     data: new SlashCommandBuilder()
 
         // Rollup command
         .setName('rollup')
         .setDescription('📜 Clean up your Discord channels via threading 🌟')
-        // .addSubcommand(helpSubcommand =>
-        //     helpSubcommand
-        //         .setName('help')
-        //         .setDescription('Display rollup subcommands'))
         .addIntegerOption(messageCount =>
             messageCount
                 .setName('messages')
@@ -22,30 +18,12 @@ module.exports = {
                 .setRequired(true)),
 
     async execute (interaction) {
-        // Dependencies
-        const Discord = require('discord.js');
-
-        // On /rollup help, display rollup command help
-        // if (interaction.options.getSubcommand() === 'help') {
-        //     const rollupHelpEmbed = new Discord.MessageEmbed()
-        //         .setColor('#ff4ea0')
-        //         .setTitle('Rollup')
-        //         .setDescription('📜 Clean up your Discord channels via threading 🌟')
-        //         .addField('', '', false)
-        //         .addField('', '', false)
-        //         .addField('', '', false);
-        //     await interaction.reply({embeds: [rollupHelpEmbed]});
-        // } else
-
         // Ignore if message count exceeds 100
-        if (interaction.options.getInteger('messages') > 100) {
-            await interaction.reply({content: 'Sorry, that isn\'t within the 100-message limit! Try something more recent.', ephemeral: true});
-            return;
-        }
+        if (interaction.options.getInteger('messages') > 100)
+            return await interaction.reply({ content: 'Sorry, that isn\'t within the 100-message limit! Try something more recent.', ephemeral: true });
 
         // Execute /rollup
-        interaction.channel.messages.fetch({limit: interaction.options.getInteger('messages')}).then(async messages => {
-
+        interaction.channel.messages.fetch({ limit: interaction.options.getInteger('messages') }).then(async messages => {
             // Search for existing Rollup webhook
             let rollupWebhook = {};
             console.log('Empty rollupWebhook:');
@@ -55,41 +33,32 @@ module.exports = {
             await interaction.member.guild.fetchWebhooks()
                 .then(async webhooks => {
                     console.log(webhooks);
-                    for (const webhook of webhooks.values()) {
-                        if (webhook.owner.id === process.env.CLIENTID) {
-
+                    for (const webhook of webhooks.values())
+                        if (webhook.owner.id === process.env.BOT_CLIENT_ID) {
                             // Found Rollup webhook, edit existing to match channel of interaction
                             console.log('Found Rollup webhook!');
                             console.log('Size:');
                             console.log(Object.keys(webhook).length);
 
-                            await webhook.edit({
-                                channel: interaction.channel
-                            })
+                            await webhook.edit({ channel: interaction.channel })
                                 .then(async editedWebhook => {
                                     console.log('Edited rollup webhook:');
                                     console.log(editedWebhook);
                                     rollupWebhook = editedWebhook;
                                 })
                                 .catch(console.error);
-
                         }
-                    }
 
                     if (Object.keys(rollupWebhook).length === 0) {
-
                         // No exiting Rollup webhook found, create one for interacting with thread
                         console.log('No Rollup webhook found! Creating new one.');
-                        await interaction.channel.createWebhook('Rollup', {
-                            avatar: 'https://raw.githubusercontent.com/edwardshturman/rollup-bot/master/assets/rollup-logo.png'
-                        })
+                        await interaction.channel.createWebhook('Rollup', { avatar: 'https://raw.githubusercontent.com/edwardshturman/rollup-bot/master/assets/rollup-logo.png' })
                             .then(webhook => {
                                 console.log(webhook);
                                 rollupWebhook = webhook;
                             })
                             .catch(console.error);
                     }
-
                 })
                 .catch(console.error);
 
@@ -121,3 +90,5 @@ module.exports = {
         });
     }
 };
+
+export default rollupCommand;

@@ -1,6 +1,6 @@
-const { ContextMenuCommandBuilder } = require('@discordjs/builders');
+import { ContextMenuCommandBuilder } from '@discordjs/builders';
 
-module.exports = {
+const rollupContextCommand = {
     data: new ContextMenuCommandBuilder()
 
         // Rollup context menu command
@@ -8,18 +8,11 @@ module.exports = {
         .setType(3),
 
     async execute (interaction) {
-        // Dependencies
-        const Discord = require('discord.js');
+        await interaction.channel.messages.fetch({ limit: 100 }).then(async messages => {
+            if (!messages.has(interaction.targetId))
+                await interaction.reply({ content: 'Sorry, that message isn\'t within the 100-message limit! Try something more recent.', ephemeral: true });
 
-        await interaction.channel.messages.fetch({limit: 100}).then(async messages => {
-
-            // console.log(messages.first());
-
-            if (!messages.has(interaction.targetId)) {
-                await interaction.reply({content: 'Sorry, that message isn\'t within the 100-message limit! Try something more recent.', ephemeral: true});
-
-            } else {
-
+            else {
                 // Search for existing Rollup webhook
                 let rollupWebhook = {};
                 console.log('Empty rollupWebhook:');
@@ -29,47 +22,38 @@ module.exports = {
                 await interaction.member.guild.fetchWebhooks()
                     .then(async webhooks => {
                         console.log(webhooks);
-                        for (const webhook of webhooks.values()) {
-                            if (webhook.owner.id === process.env.CLIENTID) {
-
+                        for (const webhook of webhooks.values())
+                            if (webhook.owner.id === process.env.BOT_CLIENT_ID) {
                                 // Found Rollup webhook, edit existing to match channel of interaction
                                 console.log('Found Rollup webhook!');
                                 console.log('Size:');
                                 console.log(Object.keys(webhook).length);
 
-                                await webhook.edit({
-                                    channel: interaction.channel
-                                })
+                                await webhook.edit({ channel: interaction.channel })
                                     .then(async editedWebhook => {
                                         console.log('Edited rollup webhook:');
                                         console.log(editedWebhook);
                                         rollupWebhook = editedWebhook;
                                     })
                                     .catch(console.error);
-
                             }
-                        }
 
                         if (Object.keys(rollupWebhook).length === 0) {
-
                             // No exiting Rollup webhook found, create one for interacting with thread
                             console.log('No Rollup webhook found! Creating new one.');
-                            await interaction.channel.createWebhook('Rollup', {
-                                avatar: 'https://raw.githubusercontent.com/edwardshturman/rollup-bot/master/assets/rollup-logo.png'
-                            })
+                            await interaction.channel.createWebhook('Rollup', { avatar: 'https://raw.githubusercontent.com/edwardshturman/rollup-bot/master/assets/rollup-logo.png' })
                                 .then(webhook => {
                                     console.log(webhook);
                                     rollupWebhook = webhook;
                                 })
                                 .catch(console.error);
                         }
-
                     })
                     .catch(console.error);
 
                 // Create and join thread
-                let threadName = '';
-                await interaction.channel.messages.fetch(interaction.targetId).then(targetMessage => threadName = targetMessage.content);
+                const threadMessage = await interaction.channel.messages.fetch(interaction.targetId);
+                const threadName = threadMessage.content.length > 50 ? threadMessage.content.slice(0, 50) + '...' : threadMessage.content;
                 const thread = await interaction.channel.threads.create({
                     name: threadName,
                     autoArchiveDuration: 60,
@@ -107,7 +91,8 @@ module.exports = {
 
                 await interaction.reply('New thread created from ' + targetValues.length + ' messages!');
             }
-
         });
     }
 };
+
+export default rollupContextCommand;
