@@ -3,7 +3,7 @@
   "author": "Edward Shturman",
   "bugs": "https://github.com/edwardshturman/rollup-bot/issues",
   "homepage": "https://github.com/edwardshturman/rollup-bot",
-  "version": "0.3.2",
+  "version": "0.3.4",
   "license": "UNLICENSED",
   "description": "Clean up your Discord channels via threading",
   "type": "module",
