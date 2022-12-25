@@ -1,5 +1,4 @@
 import { ContextMenuCommandBuilder } from '@discordjs/builders';
-import Discord from 'discord.js';
 
 const purgeContextCommand = {
     data: new ContextMenuCommandBuilder()
@@ -9,12 +8,7 @@ const purgeContextCommand = {
         .setType(3),
 
     async execute (interaction) {
-        // Ignore if no Manage Messages perms
-        if (!interaction.member.permissions.has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)) {
-            await interaction.reply({ content: 'Sorry, you don\'t have permissions to do this!', ephemeral: true });
-            return;
-        }
-
+        // Ignore if message count exceeds 100
         await interaction.channel.messages.fetch({ limit: 100 }).then(async messages => {
             // Ignore if message isn't within the 100-message limit
             if (!messages.has(interaction.targetId))
