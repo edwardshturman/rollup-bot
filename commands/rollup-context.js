@@ -43,7 +43,7 @@ const rollupContextCommand = {
                 const threadMessage = await interaction.channel.messages.fetch(interaction.targetId);
                 const threadName = threadMessage.content.length > 50 ? threadMessage.content.slice(0, 50) + '...' : threadMessage.content;
                 const thread = await interaction.channel.threads.create({
-                    name: threadName,
+                    name: threadName || 'Rollup Thread',
                     autoArchiveDuration: 60,
                     reason: 'Thread created by ' + interaction.user.tag + ' using Rollup'
                 });
