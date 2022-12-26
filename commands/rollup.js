@@ -62,10 +62,11 @@ const rollupCommand = {
             const messagesArray = [...messages.values()];
 
             messagesArray.slice().reverse().forEach(message => {
+                const attachmentLinks = message.attachments.map(attachment => attachment.proxyURL).join(' ');
                 rollupWebhook.send({
                     username: message.member.displayName,
                     avatarURL: message.author.displayAvatarURL(),
-                    content: message.content,
+                    content: message.content?.length > 0 ? message.content : attachmentLinks,
                     threadId: thread.id
                 });
 
