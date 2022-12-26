@@ -24,7 +24,7 @@ for (const command of commands.default)
 // Log launch, set status
 client.once('ready', () => {
     console.log('Rollup is online!');
-    client.user.setActivity('/rollup | v0.3.4', { type: 'LISTENING' });
+    client.user.setActivity('/rollup | v0.4.0', { type: 'LISTENING' });
 });
 
 // Interaction listener for slash commands
