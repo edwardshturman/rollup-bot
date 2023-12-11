@@ -2,7 +2,7 @@
 
 🌟 A simple Discord bot for cleaning channels via threading. 📜
 
-[![Dependency status](https://david-dm.org/edwardshturman/rollup-bot.svg)](https://david-dm.org/edwardshturman/rollup-bot)
+[![GitHub last commit](https://img.shields.io/github/last-commit/edwardshturman/rollup-bot)](https://github.com/edwardshturman/rollup-bot/commits/master)
 
 ---
 
